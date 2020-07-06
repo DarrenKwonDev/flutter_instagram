@@ -1,3 +1,4 @@
+import 'package:com/utils/profile_img_path.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -39,22 +40,43 @@ class _FeedPageState extends State<FeedPage> {
       body: ListView.builder(
           itemCount: 15,
           itemBuilder: (BuildContext context, int index) {
-            return _feedItem(index);
+            return _postItem(index);
           }),
     );
   }
 
-  Column _feedItem(int index) {
+  Column _postItem(int index) {
     return Column(
             children: <Widget>[
-              _feedImage(index),
+              _postHeader("username $index"),
+              _postImage(index),
             ],
           );
   }
 
-  CachedNetworkImage _feedImage(int index) {
+  Row _postHeader(String username) {
+    return Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: CircleAvatar(
+                    radius: 16,
+                    backgroundImage: CachedNetworkImageProvider(
+                        getProfileImgPath(username)
+                    ),
+                  ),
+                ),
+                Expanded(child: Text(username)),
+                IconButton(
+                  icon: Icon(Icons.more, color: Colors.black87), onPressed: () {  },
+                )
+              ],
+            );
+  }
+
+  CachedNetworkImage _postImage(int index) {
     return CachedNetworkImage(
-                imageUrl: "https://picsum.photos/id/${index + 150}/200/200",
+                imageUrl: "https://picsum.photos/id/$index/200/200",
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
                 imageBuilder: (context, imageProvider) => AspectRatio(
