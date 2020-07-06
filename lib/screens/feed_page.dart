@@ -1,5 +1,6 @@
 import 'package:com/constants/size.dart';
 import 'package:com/utils/profile_img_path.dart';
+import 'package:com/widgets/commnets.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -54,30 +55,32 @@ class _FeedPageState extends State<FeedPage> {
         _postImage(index),
         _postActions(),
         _postLikes(),
-        _postCaption(context, index)
+        _postCaption(context, index),
+        _allComments()
       ],
     );
   }
 
+  FlatButton _allComments() {
+    return FlatButton(
+        onPressed: () {  },
+        child: Text(
+          "show all 18 comments",
+          style: TextStyle(color: Colors.grey[600]),
+        ),
+      );
+  }
+
   Padding _postCaption(context, int index) {
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: common_gap),
-        child: RichText(
-            text: TextSpan(
-                style: DefaultTextStyle.of(context).style,
-                children: <TextSpan>[
-              TextSpan(
-                text: "username $index",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              TextSpan(
-                  text: ""
-              ),
-              TextSpan(
-                text: "I like my new laptop sooooooooooooooooooo much",
-              ),
-            ])),
-      );
+      padding: const EdgeInsets.symmetric(horizontal: common_gap),
+      child: Comment(
+        username: "username $index",
+//          showProfile: true,
+        caption: "I like my new laptop soooooooooooooooooo much",
+//          dateTime: DateTime.now()
+      ),
+    );
   }
 
   Padding _postLikes() {
@@ -115,7 +118,7 @@ class _FeedPageState extends State<FeedPage> {
         IconButton(
           icon: ImageIcon(
             AssetImage('assets/heart_selected.png'),
-            color: Colors.black87,
+            color: Colors.redAccent,
           ),
           onPressed: () {},
         ),
