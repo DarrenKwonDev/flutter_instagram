@@ -43,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
       );
 
   Widget _getStatusLabelWidget(String value) => Center(
-    child: Padding(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: common_s_gap),
           child: FittedBox(
             fit: BoxFit.scaleDown,
@@ -52,10 +52,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: TextStyle(fontWeight: FontWeight.w300)),
           ),
         ),
-  );
+      );
 
   Widget _getStatusValueWidget(String value) => Center(
-    child: Padding(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: common_s_gap),
           child: FittedBox(
             fit: BoxFit.scaleDown,
@@ -64,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         ),
-  );
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +117,12 @@ class _ProfilePageState extends State<ProfilePage> {
               child: CustomScrollView(
                 slivers: <Widget>[
                   SliverList(
-                    delegate: SliverChildListDelegate([_getProfileHeader]),
+                    delegate: SliverChildListDelegate([
+                      _getProfileHeader,
+                      _username(),
+                      _userbio(),
+                      __editProfileBtn()
+                    ]),
                   ),
                 ],
               ),
@@ -126,6 +131,36 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
+  }
+
+  Padding __editProfileBtn() {
+    return Padding(
+                      padding: const EdgeInsets.all(common_gap),
+                      child: OutlineButton(
+                          onPressed: () {},
+                          borderSide: BorderSide(color: Colors.black45),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6)
+                          ),
+                          child: Text("Edit Profile",
+                              style: TextStyle(fontWeight: FontWeight.bold))),
+                    );
+  }
+
+  Padding _userbio() {
+    return Padding(
+                      padding: const EdgeInsets.only(left: common_gap),
+                      child: Text("Bio from User. So Say something",
+                          style: TextStyle(fontWeight: FontWeight.w400)),
+                    );
+  }
+
+  Padding _username() {
+    return Padding(
+                      padding: const EdgeInsets.only(left: common_gap),
+                      child: Text("User Real Name",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                    );
   }
 
   Row _usernameIconButton() {
