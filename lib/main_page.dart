@@ -1,4 +1,5 @@
 import 'package:com/screens/feed_page.dart';
+import 'package:com/screens/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -15,7 +16,7 @@ class _MainPageState extends State<MainPage> {
     Container(color: Colors.primaries[1],),
     Container(color: Colors.primaries[2],),
     Container(color: Colors.primaries[3],),
-    Container(color: Colors.primaries[4],),
+    ProfilePage()
   ];
 
   void  _onItemTapped(int index) {
