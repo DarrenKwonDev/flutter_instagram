@@ -14,15 +14,56 @@ class _ProfilePageState extends State<ProfilePage> {
   int duration = 200;
 
   get _getProfileHeader => Row(
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.all(common_gap),
-        child: CircleAvatar(
-          radius: 40,
-          backgroundImage: NetworkImage(getProfileImgPath("usernamestring")),
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(common_gap),
+            child: CircleAvatar(
+              radius: 40,
+              backgroundImage:
+                  NetworkImage(getProfileImgPath("usernamestring")),
+            ),
+          ),
+          Expanded(
+            child: Table(
+              children: [
+                TableRow(children: [
+                  _getStatusValueWidget("123"),
+                  _getStatusValueWidget('3456'),
+                  _getStatusValueWidget('768'),
+                ]),
+                TableRow(children: [
+                  _getStatusLabelWidget("Posts"),
+                  _getStatusLabelWidget("Follwers"),
+                  _getStatusLabelWidget("Following"),
+                ]),
+              ],
+            ),
+          )
+        ],
+      );
+
+  Widget _getStatusLabelWidget(String value) => Center(
+    child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: common_s_gap),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(value,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.w300)),
+          ),
         ),
-      )
-    ],
+  );
+
+  Widget _getStatusValueWidget(String value) => Center(
+    child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: common_s_gap),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(value,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold)),
+          ),
+        ),
   );
 
   @override
@@ -76,9 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: CustomScrollView(
                 slivers: <Widget>[
                   SliverList(
-                    delegate: SliverChildListDelegate(
-                      [_getProfileHeader]
-                    ),
+                    delegate: SliverChildListDelegate([_getProfileHeader]),
                   ),
                 ],
               ),
