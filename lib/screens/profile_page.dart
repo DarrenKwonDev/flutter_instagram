@@ -1,4 +1,5 @@
 import 'package:com/constants/size.dart';
+import 'package:com/utils/profile_img_path.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -12,6 +13,18 @@ class _ProfilePageState extends State<ProfilePage> {
   double menuWidth;
   int duration = 200;
 
+  get _getProfileHeader => Row(
+    children: <Widget>[
+      Padding(
+        padding: const EdgeInsets.all(common_gap),
+        child: CircleAvatar(
+          radius: 40,
+          backgroundImage: NetworkImage(getProfileImgPath("usernamestring")),
+        ),
+      )
+    ],
+  );
+
   @override
   Widget build(BuildContext context) {
     _size = MediaQuery.of(context).size;
@@ -21,7 +34,6 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Stack(
         children: <Widget>[_sideMenu(), _profile()],
       ),
-
     );
   }
 
@@ -35,6 +47,17 @@ class _ProfilePageState extends State<ProfilePage> {
       // 열리지 않았다면 현재 화면 길이 만큼 _profile이 차지하고 있으니 0을 주어도 무방합니다
       transform: Matrix4.translationValues(
           _menuOpened ? _size.width - menuWidth : 0, 0, 0),
+      child: SafeArea(
+        child: SizedBox(
+          width: menuWidth,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              FlatButton(onPressed: () {}, child: Text("DarrenKwon"))
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -48,22 +71,42 @@ class _ProfilePageState extends State<ProfilePage> {
       child: SafeArea(
         child: Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(child: Padding(
-                  padding: const EdgeInsets.only(left: common_gap),
-                  child: Text("This is Username"),
-                )),
-                IconButton(icon: Icon(Icons.menu), onPressed: () {
-                  setState(() {
-                    _menuOpened = !_menuOpened;
-                  });
-                },)
-              ],
+            _usernameIconButton(),
+            Expanded(
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [_getProfileHeader]
+                    ),
+                  ),
+                ],
+              ),
             )
           ],
         ),
       ),
+    );
+  }
+
+  Row _usernameIconButton() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+            child: Padding(
+          padding: const EdgeInsets.only(left: common_gap),
+          child: Text("DarrenKwon",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        )),
+        IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            setState(() {
+              _menuOpened = !_menuOpened;
+            });
+          },
+        )
+      ],
     );
   }
 }
