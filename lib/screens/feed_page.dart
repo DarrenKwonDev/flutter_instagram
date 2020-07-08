@@ -63,12 +63,12 @@ class _FeedPageState extends State<FeedPage> {
 
   FlatButton _allComments() {
     return FlatButton(
-        onPressed: () {  },
-        child: Text(
-          "show all 18 comments",
-          style: TextStyle(color: Colors.grey[600]),
-        ),
-      );
+      onPressed: () {},
+      child: Text(
+        "show all 18 comments",
+        style: TextStyle(color: Colors.grey[600]),
+      ),
+    );
   }
 
   Padding _postCaption(context, int index) {
@@ -149,7 +149,17 @@ class _FeedPageState extends State<FeedPage> {
   CachedNetworkImage _postImage(int index) {
     return CachedNetworkImage(
       imageUrl: "https://picsum.photos/id/$index/200/200",
-      placeholder: (context, url) => CircularProgressIndicator(),
+      placeholder: (context, url) => Container(
+        width: size.width,
+        height: size.width,
+        child: Center(
+          child: SizedBox(
+            width: 30,
+            height: 30,
+            child: Image.asset("assets/loading_img.gif"),
+          ),
+        ),
+      ),
       errorWidget: (context, url, error) => Icon(Icons.error),
       imageBuilder: (context, imageProvider) => AspectRatio(
         aspectRatio: 1,

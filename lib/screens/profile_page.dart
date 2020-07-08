@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:com/constants/size.dart';
 import 'package:com/utils/profile_img_path.dart';
+import 'package:com/widgets/profile_side_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -9,16 +10,33 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage>
+    with SingleTickerProviderStateMixin {
+  AnimationController _animationController;
   bool _menuOpened = false;
   double menuWidth;
-  int duration = 200;
+  int duration = 1000;
   int iconDuration = 1;
   AlignmentGeometry tabAlign = Alignment.centerLeft;
   bool iconLeft = true;
   bool iconSelected = true;
   double _gridMargin = 0;
   double _myImgGridMargin = size.width;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(microseconds: duration),
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   get _getProfileHeader => Row(
         children: <Widget>[
@@ -90,17 +108,17 @@ class _ProfilePageState extends State<ProfilePage> {
       );
 
   get _imageGrid => GridView.count(
-    physics: NeverScrollableScrollPhysics(),
-    shrinkWrap: true,
-    crossAxisCount: 3,
-    childAspectRatio: 1,
-    children: List.generate(30, (index) => _gridImgItem(index)),
-  );
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        crossAxisCount: 3,
+        childAspectRatio: 1,
+        children: List.generate(30, (index) => _gridImgItem(index)),
+      );
 
   _gridImgItem(int index) => CachedNetworkImage(
-    fit: BoxFit.cover,
-    imageUrl: "https://picsum.photos/id/$index/100/100",
-  );
+        fit: BoxFit.cover,
+        imageUrl: "https://picsum.photos/id/$index/100/100",
+      );
 
   Widget _getStatusLabelWidget(String value) => Center(
         child: Padding(
@@ -148,7 +166,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       body: Stack(
-        children: <Widget>[_sideMenu(), _profile()],
+        children: <Widget>[
+          _profile(),
+          _sideMenu(),
+        ],
       ),
     );
   }
@@ -160,18 +181,12 @@ class _ProfilePageState extends State<ProfilePage> {
       color: Colors.grey[200],
       curve: Curves.easeInOut,
       // 메뉴가 열리면 화면의 가로 길이에서 메뉴의 크기 만큼 뺀 공간을 주어서 보이게 만듭니다.
-      // 열리지 않았다면 현재 화면 길이 만큼 _profile이 차지하고 있으니 0을 주어도 무방합니다
       transform: Matrix4.translationValues(
-          _menuOpened ? size.width - menuWidth : 0, 0, 0),
+          _menuOpened ? size.width - menuWidth : size.width, 0, 0),
       child: SafeArea(
         child: SizedBox(
           width: menuWidth,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              FlatButton(onPressed: () {}, child: Text("DarrenKwon"))
-            ],
-          ),
+          child: ProfileSideMEnu(),
         ),
       ),
     );
@@ -268,8 +283,13 @@ class _ProfilePageState extends State<ProfilePage> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         )),
         IconButton(
-          icon: Icon(Icons.menu),
+          icon: AnimatedIcon(
+            icon: AnimatedIcons.menu_close,
+            progress: _animationController,
+            semanticLabel: "Show menu",
+          ),
           onPressed: () {
+            _menuOpened ? _animationController.reverse() : _animationController.forward();
             setState(() {
               _menuOpened = !_menuOpened;
             });
