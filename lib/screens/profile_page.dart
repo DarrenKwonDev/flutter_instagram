@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:com/constants/size.dart';
 import 'package:com/utils/profile_img_path.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -11,7 +13,12 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _menuOpened = false;
   double menuWidth;
   int duration = 200;
+  int iconDuration = 1;
   AlignmentGeometry tabAlign = Alignment.centerLeft;
+  bool iconLeft = true;
+  bool iconSelected = true;
+  double _gridMargin = 0;
+  double _myImgGridMargin = size.width;
 
   get _getProfileHeader => Row(
         children: <Widget>[
@@ -48,6 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: IconButton(
             icon: ImageIcon(
               AssetImage("assets/grid.png"),
+              color: iconSelected ? Colors.black87 : Colors.black26,
             ),
             onPressed: () {
               setState(() {
@@ -59,6 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: IconButton(
             icon: ImageIcon(
               AssetImage("assets/saved.png"),
+              color: !iconSelected ? Colors.black87 : Colors.black26,
             ),
             onPressed: () {
               setState(() {
@@ -79,6 +88,19 @@ class _ProfilePageState extends State<ProfilePage> {
         child:
             Container(height: 1, width: size.width / 2, color: Colors.black87),
       );
+
+  get _imageGrid => GridView.count(
+    physics: NeverScrollableScrollPhysics(),
+    shrinkWrap: true,
+    crossAxisCount: 3,
+    childAspectRatio: 1,
+    children: List.generate(30, (index) => _gridImgItem(index)),
+  );
+
+  _gridImgItem(int index) => CachedNetworkImage(
+    fit: BoxFit.cover,
+    imageUrl: "https://picsum.photos/id/$index/100/100",
+  );
 
   Widget _getStatusLabelWidget(String value) => Center(
         child: Padding(
@@ -108,9 +130,15 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       if (tabLeft) {
         this.tabAlign = Alignment.centerLeft;
+        this.iconSelected = true;
+        this._gridMargin = 0;
+        this._myImgGridMargin = size.width;
       } else {
         this.tabAlign = Alignment.centerRight;
-      };
+        this.iconSelected = false;
+        this._gridMargin = -size.width;
+        this._myImgGridMargin = 0;
+      }
     });
   }
 
@@ -173,6 +201,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       _getAnimatedSelectedBar
                     ]),
                   ),
+                  _getImageGrid(context)
                 ],
               ),
             )
@@ -209,6 +238,25 @@ class _ProfilePageState extends State<ProfilePage> {
           Text("User Real Name", style: TextStyle(fontWeight: FontWeight.bold)),
     );
   }
+
+  _getImageGrid(BuildContext context) => SliverToBoxAdapter(
+        child: Stack(
+          children: <Widget>[
+            AnimatedContainer(
+              duration: Duration(seconds: iconDuration),
+              curve: Curves.easeInOut,
+              transform: Matrix4.translationValues(_gridMargin, 0, 0),
+              child: _imageGrid,
+            ),
+            AnimatedContainer(
+              duration: Duration(seconds: iconDuration),
+              curve: Curves.easeInOut,
+              transform: Matrix4.translationValues(_myImgGridMargin, 0, 0),
+              child: _imageGrid,
+            ),
+          ],
+        ),
+      );
 
   Row _usernameIconButton() {
     return Row(
