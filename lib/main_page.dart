@@ -1,6 +1,7 @@
 import 'package:com/constants/size.dart';
 import 'package:com/screens/feed_page.dart';
 import 'package:com/screens/profile_page.dart';
+import 'package:com/screens/search_page.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class _MainPageState extends State<MainPage> {
 
   static List<Widget> _widgetOptions = [
     FeedPage(),
-    Container(color: Colors.primaries[1],),
+    SearchPage(),
     Container(color: Colors.primaries[2],),
     Container(color: Colors.primaries[3],),
     ProfilePage()
