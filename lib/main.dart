@@ -1,5 +1,6 @@
 import 'package:com/constants/material_white_color.dart';
 import 'package:com/main_page.dart';
+import 'package:com/screens/signin_page.dart';
 import 'package:flutter/material.dart';
 
 
@@ -19,7 +20,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: white
       ),
-      home: MainPage()
+      home: SignInPage()
     );
   }
 }
