@@ -1,4 +1,5 @@
 import 'package:com/constants/size.dart';
+import 'package:com/screens/camera_page.dart';
 import 'package:com/screens/feed_page.dart';
 import 'package:com/screens/profile_page.dart';
 import 'package:com/screens/search_page.dart';
@@ -16,16 +17,20 @@ class _MainPageState extends State<MainPage> {
   static List<Widget> _widgetOptions = [
     FeedPage(),
     SearchPage(),
-    Container(color: Colors.primaries[2],),
+    CameraPage(),
     Container(color: Colors.primaries[3],),
     ProfilePage()
   ];
 
   void  _onItemTapped(int index) {
     print(index);
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 2) {
+      openCamera(context);
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
 
@@ -88,3 +93,8 @@ BottomNavigationBarItem _buildBottomNavigationBarItem({String activeIconPath, St
   );
 }
 
+openCamera(context) {
+  Navigator.push(context, MaterialPageRoute(
+      builder: (context) => CameraPage()
+  ));
+}
