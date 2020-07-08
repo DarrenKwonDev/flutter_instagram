@@ -9,9 +9,9 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool _menuOpened = false;
-  Size _size;
   double menuWidth;
   int duration = 200;
+  AlignmentGeometry tabAlign = Alignment.centerLeft;
 
   get _getProfileHeader => Row(
         children: <Widget>[
@@ -42,6 +42,44 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       );
 
+  get _getTabIconButtons => Row(
+        children: <Widget>[
+          Expanded(
+              child: IconButton(
+            icon: ImageIcon(
+              AssetImage("assets/grid.png"),
+            ),
+            onPressed: () {
+              setState(() {
+                _setTab(true);
+              });
+            },
+          )),
+          Expanded(
+              child: IconButton(
+            icon: ImageIcon(
+              AssetImage("assets/saved.png"),
+            ),
+            onPressed: () {
+              setState(() {
+                _setTab(false);
+              });
+            },
+          )),
+        ],
+      );
+
+  get _getAnimatedSelectedBar => AnimatedContainer(
+        duration: Duration(seconds: 1),
+        alignment: tabAlign,
+        curve: Curves.easeInOut,
+        color: Colors.transparent,
+        height: 1,
+        width: size.width,
+        child:
+            Container(height: 1, width: size.width / 2, color: Colors.black87),
+      );
+
   Widget _getStatusLabelWidget(String value) => Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: common_s_gap),
@@ -66,10 +104,19 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       );
 
+  _setTab(bool tabLeft) {
+    setState(() {
+      if (tabLeft) {
+        this.tabAlign = Alignment.centerLeft;
+      } else {
+        this.tabAlign = Alignment.centerRight;
+      };
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    _size = MediaQuery.of(context).size;
-    menuWidth = _size.width / 1.5;
+    menuWidth = size.width / 1.5;
 
     return Scaffold(
       body: Stack(
@@ -87,7 +134,7 @@ class _ProfilePageState extends State<ProfilePage> {
       // 메뉴가 열리면 화면의 가로 길이에서 메뉴의 크기 만큼 뺀 공간을 주어서 보이게 만듭니다.
       // 열리지 않았다면 현재 화면 길이 만큼 _profile이 차지하고 있으니 0을 주어도 무방합니다
       transform: Matrix4.translationValues(
-          _menuOpened ? _size.width - menuWidth : 0, 0, 0),
+          _menuOpened ? size.width - menuWidth : 0, 0, 0),
       child: SafeArea(
         child: SizedBox(
           width: menuWidth,
@@ -121,7 +168,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       _getProfileHeader,
                       _username(),
                       _userbio(),
-                      __editProfileBtn()
+                      _editProfileBtn(),
+                      _getTabIconButtons,
+                      _getAnimatedSelectedBar
                     ]),
                   ),
                 ],
@@ -133,34 +182,32 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Padding __editProfileBtn() {
+  Padding _editProfileBtn() {
     return Padding(
-                      padding: const EdgeInsets.all(common_gap),
-                      child: OutlineButton(
-                          onPressed: () {},
-                          borderSide: BorderSide(color: Colors.black45),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6)
-                          ),
-                          child: Text("Edit Profile",
-                              style: TextStyle(fontWeight: FontWeight.bold))),
-                    );
+      padding: const EdgeInsets.all(common_gap),
+      child: OutlineButton(
+          onPressed: () {},
+          borderSide: BorderSide(color: Colors.black45),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+          child: Text("Edit Profile",
+              style: TextStyle(fontWeight: FontWeight.bold))),
+    );
   }
 
   Padding _userbio() {
     return Padding(
-                      padding: const EdgeInsets.only(left: common_gap),
-                      child: Text("Bio from User. So Say something",
-                          style: TextStyle(fontWeight: FontWeight.w400)),
-                    );
+      padding: const EdgeInsets.only(left: common_gap),
+      child: Text("Bio from User. So Say something",
+          style: TextStyle(fontWeight: FontWeight.w400)),
+    );
   }
 
   Padding _username() {
     return Padding(
-                      padding: const EdgeInsets.only(left: common_gap),
-                      child: Text("User Real Name",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    );
+      padding: const EdgeInsets.only(left: common_gap),
+      child:
+          Text("User Real Name", style: TextStyle(fontWeight: FontWeight.bold)),
+    );
   }
 
   Row _usernameIconButton() {

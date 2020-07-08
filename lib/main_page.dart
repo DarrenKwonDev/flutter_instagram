@@ -1,3 +1,4 @@
+import 'package:com/constants/size.dart';
 import 'package:com/screens/feed_page.dart';
 import 'package:com/screens/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,9 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (size == null) {
+      size = MediaQuery.of(context).size;
+    }
     return Scaffold(
         body: IndexedStack(
           index: _selectedIndex,
