@@ -1,14 +1,15 @@
-import 'package:com/screens/signup_page.dart';
+import 'package:com/screens/signin_page.dart';
 import 'package:com/utils/simple_snack_bar.dart';
 import 'package:com/widgets/sign_in_form.dart';
+import 'package:com/widgets/sign_up_form.dart';
 import 'package:flutter/material.dart';
 
-class SignInPage extends StatefulWidget {
+class SignUpPage extends StatefulWidget {
   @override
-  _SignInPageState createState() => _SignInPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +17,7 @@ class _SignInPageState extends State<SignInPage> {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-            SignInForm(),
+            SignUpForm(),
             _gotoSignUpPageBtn(context),
           ],
         ),
@@ -33,18 +34,18 @@ class _SignInPageState extends State<SignInPage> {
       child: FlatButton(
         shape: Border(top: BorderSide(color: Colors.grey[300])),
         onPressed: () {
-          final route = MaterialPageRoute(builder: (context) => SignUpPage());
+          final route = MaterialPageRoute(builder: (context) => SignInPage());
           Navigator.push(context, route);
         },
         child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(style: TextStyle(), children: [
               TextSpan(
-                  text: "Don't have an account?",
+                  text: "Already have an acoount?",
                   style: TextStyle(
                       fontWeight: FontWeight.w300, color: Colors.black54)),
               TextSpan(
-                  text: "Sign up",
+                  text: "Sign In",
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.blue[600])),
             ])),

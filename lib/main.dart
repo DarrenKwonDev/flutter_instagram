@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: white
       ),
-      home: MainPage()
+      home: SignInPage()
     );
   }
 }
