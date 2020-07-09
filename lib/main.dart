@@ -20,7 +20,11 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: white
       ),
-      home: SignInPage()
+      home: MainPage()
     );
   }
 }
+
+// MainPage()는 테스트용
+// 완성 후에는 아래 페이지로 변화시킬 것
+//SignInPage()

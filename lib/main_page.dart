@@ -3,6 +3,7 @@ import 'package:com/screens/camera_page.dart';
 import 'package:com/screens/feed_page.dart';
 import 'package:com/screens/profile_page.dart';
 import 'package:com/screens/search_page.dart';
+import 'package:com/widgets/my_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class _MainPageState extends State<MainPage> {
     FeedPage(),
     SearchPage(),
     CameraPage(),
-    Container(color: Colors.primaries[3],),
+    MyProgressIndicator(progressSize: 100),
     ProfilePage()
   ];
 

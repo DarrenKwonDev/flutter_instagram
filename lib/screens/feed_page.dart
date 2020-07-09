@@ -1,6 +1,7 @@
 import 'package:com/constants/size.dart';
 import 'package:com/utils/profile_img_path.dart';
 import 'package:com/widgets/commnets.dart';
+import 'package:com/widgets/my_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -149,17 +150,7 @@ class _FeedPageState extends State<FeedPage> {
   CachedNetworkImage _postImage(int index) {
     return CachedNetworkImage(
       imageUrl: "https://picsum.photos/id/$index/200/200",
-      placeholder: (context, url) => Container(
-        width: size.width,
-        height: size.width,
-        child: Center(
-          child: SizedBox(
-            width: 30,
-            height: 30,
-            child: Image.asset("assets/loading_img.gif"),
-          ),
-        ),
-      ),
+      placeholder: (context, url) => MyProgressIndicator(),
       errorWidget: (context, url, error) => Icon(Icons.error),
       imageBuilder: (context, imageProvider) => AspectRatio(
         aspectRatio: 1,

@@ -1,3 +1,4 @@
+import 'package:com/screens/signin_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,10 @@ class ProfileSideMEnu extends StatelessWidget {
             height: 1,
           ),
           FlatButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              final route = MaterialPageRoute(builder: (context) => SignInPage());
+              Navigator.pushReplacement(context, route);
+            },
             icon: Icon(Icons.exit_to_app),
             label: Text("Logout",
                 style: TextStyle(

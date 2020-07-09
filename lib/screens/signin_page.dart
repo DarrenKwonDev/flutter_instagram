@@ -1,3 +1,5 @@
+import 'package:com/utils/simple_snack_bar.dart';
+import 'package:com/widgets/sign_in_form.dart';
 import 'package:flutter/material.dart';
 
 class SignInPage extends StatefulWidget {
@@ -9,9 +11,11 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: <Widget>[
+            SignInForm(),
             _gotoSignUpPageBtn(context),
           ],
         ),
@@ -27,7 +31,8 @@ class _SignInPageState extends State<SignInPage> {
       height: 40,
       child: FlatButton(
         shape: Border(top: BorderSide(color: Colors.grey[300])),
-        onPressed: null,
+        onPressed: () {
+        },
         child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(style: TextStyle(), children: [
