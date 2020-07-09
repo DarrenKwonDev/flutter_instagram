@@ -1,5 +1,6 @@
 import 'package:com/constants/material_white_color.dart';
 import 'package:com/main_page.dart';
+import 'package:com/screens/auth_page.dart';
 import 'package:com/screens/signin_page.dart';
 import 'package:flutter/material.dart';
 
@@ -20,11 +21,11 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: white
       ),
-      home: SignInPage()
+      home: AuthPage()
     );
   }
 }
 
 // MainPage()는 테스트용
 // 완성 후에는 아래 페이지로 변화시킬 것
-//SignInPage()
+// AuthPage()
