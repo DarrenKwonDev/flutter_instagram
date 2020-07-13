@@ -1,5 +1,5 @@
 import 'package:com/screens/auth_page.dart';
-import 'package:com/screens/signin_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +21,7 @@ class ProfileSideMEnu extends StatelessWidget {
           ),
           FlatButton.icon(
             onPressed: () {
-              final route = MaterialPageRoute(builder: (context) => AuthPage());
-              Navigator.pushReplacement(context, route);
+              FirebaseAuth.instance.signOut();
             },
             icon: Icon(Icons.exit_to_app),
             label: Text("Logout",

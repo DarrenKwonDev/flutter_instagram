@@ -15,7 +15,9 @@ class _CameraPageState extends State<CameraPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: Text("Photo"),
         actions: <Widget>[

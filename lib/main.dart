@@ -1,7 +1,7 @@
 import 'package:com/constants/material_white_color.dart';
 import 'package:com/main_page.dart';
 import 'package:com/screens/auth_page.dart';
-import 'package:com/screens/signin_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
@@ -21,7 +21,15 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: white
       ),
-      home: AuthPage()
+      home: StreamBuilder<FirebaseUser>(
+        stream: FirebaseAuth.instance.onAuthStateChanged,
+        builder: (context, snapshot) {
+          if(snapshot.hasData) {
+            return MainPage();
+          }
+          return AuthPage();
+        }
+      )
     );
   }
 }
