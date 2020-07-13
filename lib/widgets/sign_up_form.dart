@@ -67,6 +67,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 height: 15,
               ),
               TextFormField(
+                obscureText: true,
                 controller: _cpwController,
                 decoration: getTextFieldDecor("Confirm Password"),
                 validator: (value) {

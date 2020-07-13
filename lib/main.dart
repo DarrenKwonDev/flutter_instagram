@@ -1,6 +1,7 @@
 import 'package:com/constants/material_white_color.dart';
 import 'package:com/main_page.dart';
 import 'package:com/screens/auth_page.dart';
+import 'package:com/widgets/my_progress_indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,8 @@ import 'package:flutter/material.dart';
 void main() {
   return runApp(MyApp());
 }
+
+bool isItFirstData = true;
 
 class MyApp extends StatefulWidget {
   @override
@@ -24,10 +27,15 @@ class _MyAppState extends State<MyApp> {
       home: StreamBuilder<FirebaseUser>(
         stream: FirebaseAuth.instance.onAuthStateChanged,
         builder: (context, snapshot) {
-          if(snapshot.hasData) {
-            return MainPage();
+          if (isItFirstData) {
+            isItFirstData = false;
+            return MyProgressIndicator();
+          } else {
+            if(snapshot.hasData) {
+              return MainPage();
+            }
+            return AuthPage();
           }
-          return AuthPage();
         }
       )
     );

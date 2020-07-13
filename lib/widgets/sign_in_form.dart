@@ -1,6 +1,7 @@
 import 'package:com/constants/size.dart';
 import 'package:com/main_page.dart';
 import 'package:com/utils/simple_snack_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -81,8 +82,7 @@ class _SignInFormState extends State<SignInForm> {
                     borderRadius: BorderRadius.circular(6)),
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
-                    final route = MaterialPageRoute(builder: (context) => MainPage());
-                    Navigator.pushReplacement(context, route);
+                    _login;
                   }
                 },
               ),
@@ -132,11 +132,18 @@ class _SignInFormState extends State<SignInForm> {
       ),
     );
   }
-//
-//  void simpleSnackBar(context, txt) {
-//    final snackBar = SnackBar(content: Text(txt));
-//    Scaffold.of(context).showSnackBar(snackBar);
-//  }
+
+  get _login async {
+    final AuthResult result = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: _emailController.text, password: _pwController.text);
+
+    final user = result.user;
+
+    if (user == null) {
+      simpleSnackBar(context, "Please try again later!");
+    }
+  }
+
 
   InputDecoration getTextFieldDecor(String hint) {
     return InputDecoration(
