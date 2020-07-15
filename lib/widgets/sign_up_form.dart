@@ -1,5 +1,6 @@
 import 'package:com/constants/size.dart';
 import 'package:com/main_page.dart';
+import 'package:com/service/facebook_login.dart';
 import 'package:com/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -134,7 +135,7 @@ class _SignUpFormState extends State<SignUpForm> {
               FlatButton.icon(
                   textColor: Colors.blue,
                   onPressed: () {
-                    simpleSnackBar(context, "facebook login!!");
+                    signInFacebook(context);
                   },
                   icon: ImageIcon(AssetImage("assets/icon/facebook.png")),
                   label: Text("Login with Facebook")),
