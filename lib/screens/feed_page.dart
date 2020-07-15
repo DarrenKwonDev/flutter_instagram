@@ -1,4 +1,5 @@
 import 'package:com/constants/size.dart';
+import 'package:com/firebase/firestore_provider.dart';
 import 'package:com/utils/profile_img_path.dart';
 import 'package:com/widgets/commnets.dart';
 import 'package:com/widgets/my_progress_indicator.dart';
@@ -29,14 +30,21 @@ class _FeedPageState extends State<FeedPage> {
               AssetImage("assets/actionbar_camera.png"),
               color: Colors.black,
             ),
-            onPressed: () {},
+            onPressed: () {
+              firestoreProvider.sendData().then((_) {
+                print("data send to firebase");
+              });
+
+            },
           ),
           IconButton(
             icon: ImageIcon(
               AssetImage("assets/direct_message.png"),
               color: Colors.black,
             ),
-            onPressed: () {},
+            onPressed: () {
+              firestoreProvider.getData();
+            },
           ),
         ],
       ),
