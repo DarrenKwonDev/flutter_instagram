@@ -22,12 +22,27 @@ class FirestoreProvider with Transformer {
   }
 
   Stream<User> connectMyUserData(String userKey) {
-    Stream<User> userStream = _firestore
+    return _firestore
         .collection(COLLECTION_USER)
         .document(userKey)
         .snapshots()
         .transform(toUser);
   }
+
+  Stream<List<User>> fetchAllUsers() {
+    // 콜렉션 전체를 가져옵니다.
+    return _firestore.collection(COLLECTION_USER).snapshots().transform(toUsers);
+  }
+
+  Stream<List<User>> fetchAllUsersExceptMine() {
+    // 콜렉션 전체를 가져옵니다.
+    return _firestore.collection(COLLECTION_USER).snapshots().transform(toUsersExceptMine);
+  }
+
+
+
+
+
 
 //  // 데이터를 보냅니다.
 //  Future<void> sendData() {
