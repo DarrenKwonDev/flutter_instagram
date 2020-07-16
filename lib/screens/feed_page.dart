@@ -31,9 +31,9 @@ class _FeedPageState extends State<FeedPage> {
               color: Colors.black,
             ),
             onPressed: () {
-              firestoreProvider.sendData().then((_) {
-                print("data send to firebase");
-              });
+//              firestoreProvider.sendData().then((_) {
+//                print("data send to firebase");
+//              });
 
             },
           ),
@@ -43,7 +43,7 @@ class _FeedPageState extends State<FeedPage> {
               color: Colors.black,
             ),
             onPressed: () {
-              firestoreProvider.getData();
+//              firestoreProvider.getData();
             },
           ),
         ],
