@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:com/constants/firebase_keys.dart';
 import 'package:com/data/user.dart';
+import 'package:com/firebase/transformer.dart';
 
-class FirestoreProvider {
+class FirestoreProvider with Transformer {
   final Firestore _firestore = Firestore.instance;
 
   Future<void> attemptCreateuser({String userKey, String email}) {
@@ -11,11 +12,21 @@ class FirestoreProvider {
     return _firestore.runTransaction((tx) async {
       DocumentSnapshot snapshot = await tx.get(userRef);
       if (snapshot.exists) {
+        // 이미 유저가 존재하는 경우
         return;
       } else {
+        // db에 유저가 없으니 생성
         await tx.set(userRef, User.getMapForCreateUser(email));
       }
     });
+  }
+
+  Stream<User> connectMyUserData(String userKey) {
+    Stream<User> userStream = _firestore
+        .collection(COLLECTION_USER)
+        .document(userKey)
+        .snapshots()
+        .transform(toUser);
   }
 
 //  // 데이터를 보냅니다.
