@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:com/constants/size.dart';
 import 'package:com/screens/camera_page.dart';
 import 'package:com/screens/feed_page.dart';
@@ -94,8 +95,14 @@ BottomNavigationBarItem _buildBottomNavigationBarItem({String activeIconPath, St
   );
 }
 
-openCamera(context) {
+openCamera(context) async {
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
+
   Navigator.push(context, MaterialPageRoute(
-      builder: (context) => CameraPage()
+
+      builder: (context) => CameraPage(
+        camera: firstCamera
+      )
   ));
 }
