@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:com/constants/size.dart';
+import 'package:com/data/provider/my_user_data.dart';
 import 'package:com/utils/profile_img_path.dart';
 import 'package:com/widgets/profile_side_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -248,10 +250,12 @@ class _ProfilePageState extends State<ProfilePage>
 
   Padding _username() {
     return Padding(
-      padding: const EdgeInsets.only(left: common_gap),
-      child:
-          Text("User Real Name", style: TextStyle(fontWeight: FontWeight.bold)),
-    );
+        padding: const EdgeInsets.only(left: common_gap),
+        child: Consumer<MyUserData>(builder: (context, myUserData, child) {
+//          print(myUserData.data.email);
+          return Text(myUserData.data.email,
+              style: TextStyle(fontWeight: FontWeight.bold));
+        }));
   }
 
   _getImageGrid(BuildContext context) => SliverToBoxAdapter(
@@ -289,7 +293,9 @@ class _ProfilePageState extends State<ProfilePage>
             semanticLabel: "Show menu",
           ),
           onPressed: () {
-            _menuOpened ? _animationController.reverse() : _animationController.forward();
+            _menuOpened
+                ? _animationController.reverse()
+                : _animationController.forward();
             setState(() {
               _menuOpened = !_menuOpened;
             });
